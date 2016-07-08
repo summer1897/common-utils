@@ -1,0 +1,8 @@
+target/
+.groovy/
+.classpath
+.metadata
+.project
+.settings/
+.idea/
+common-utils.iml
