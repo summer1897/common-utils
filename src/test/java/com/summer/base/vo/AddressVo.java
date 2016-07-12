@@ -6,7 +6,6 @@ package com.summer.base.vo;
 public class AddressVo {
     private String province;
     private String city;
-    private String street;
     private String road;
     private int number;
 
@@ -24,14 +23,6 @@ public class AddressVo {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
     }
 
     public String getRoad() {
@@ -55,7 +46,6 @@ public class AddressVo {
         return "AddressVo{" +
                 "province='" + province + '\'' +
                 ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
                 ", road='" + road + '\'' +
                 ", number=" + number +
                 '}';

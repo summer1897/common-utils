@@ -1,47 +1,31 @@
 package com.base.pagination;
 
 /**
- * Created by summer on 16/7/9.
+ * Created by IntelliJ IDEA.
+ * Author: hzduhao
+ * Date: 2016/7/12
+ * Time: 16:22
  */
-public class PaginationQuery {
+public class PaginationQuery extends Pagination{
 
-    private static final int PAGE_INDEX = 1;
-    private static final int PAGE_SIZE = 20;
+    private String sortedPropertyName = null;
 
-    private int pageIndex;
-    private int pageSize;
-    private int totalPages;
-    private long totalRecords;
-
-    public int getPageIndex() {
-        return pageIndex;
+    public PaginationQuery(long totalRecords,int pageIndex, int pageSize){
+        super(totalRecords, pageIndex, pageSize);
     }
 
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
+    public PaginationQuery(long totalRecords,int pageIndex, int pageSize, String sortedPropertyName){
+        super(totalRecords, pageIndex, pageSize);
+        setSortedPropertyName(sortedPropertyName);
     }
 
-    public int getPageSize() {
-        return pageSize;
+    public String getSortedPropertyName(){
+        return this.sortedPropertyName;
     }
 
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
+    public void setSortedPropertyName(String sortedPropertyName){
+        this.sortedPropertyName = sortedPropertyName;
     }
 
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
-    }
-
-    public long getTotalRecords() {
-        return totalRecords;
-    }
-
-    public void setTotalRecords(long totalRecords) {
-        this.totalRecords = totalRecords;
-    }
 }
+
