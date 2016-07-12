@@ -1,7 +1,6 @@
 package com.summer.base.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -44,7 +43,6 @@ public class BeanCloneUtils {
             e.printStackTrace();
             throw new RuntimeException("can not clone");
         }
-//        return null;
     }
 
     /**
@@ -69,7 +67,6 @@ public class BeanCloneUtils {
             e.printStackTrace();
             throw new RuntimeException("can not clone");
         }
-//        return null;
     }
 
     /**
@@ -116,6 +113,59 @@ public class BeanCloneUtils {
             LOG.error(e.getMessage(),e);
             e.printStackTrace();
             throw  new RuntimeException("can not clone");
+        }
+    }
+
+    /**
+     *  单一对象克隆
+     * @param from 原对象实体
+     * @param to 克隆后对象
+     * @param fromClass 原对象Class对象
+     * @param toClass 待转换对象的Class对象
+     * @param <From>
+     * @param <To>
+     */
+    public static <From,To> void clone(From from,To to,Class<From> fromClass, Class<To> toClass){
+        try{
+
+            if(null == from){
+                return;
+            }
+            if(null != to){
+                to = toClass.newInstance();
+            }
+            BeanCopier beanCopier = BeanCopier.create(fromClass,toClass,false);
+            beanCopier.copy(from,to,null);
+        }catch (Exception e){
+            LOG.error(e.getMessage(),e);
+            e.printStackTrace();
+            throw new RuntimeException("can not clone");
+        }
+    }
+
+    /**
+     * 批量对象克隆
+     * @param fromList 原对象集合
+     * @param toList 克隆对象集合
+     * @param fromClass 原对象Class对象
+     * @param toClass 待转换对象的Class对象
+     * @param <From>
+     * @param <To>
+     */
+    public static <From,To> void clone(List<From> fromList, List<To> toList, Class<From> fromClass, Class<To> toClass){
+        try{
+            if(CollectionUtils.isEmpty(fromList) || CollectionUtils.isEmpty(toList))
+                return;
+            for(From from : fromList){
+                To newTo = null;
+                newTo = toClass.newInstance();
+                BeanCloneUtils.clone(from,newTo,fromClass,toClass);
+                toList.add(newTo);
+            }
+        }catch (Exception e){
+            LOG.error(e.getMessage(),e);
+            e.printStackTrace();
+            throw new RuntimeException("can not clone");
         }
     }
 }
