@@ -13,8 +13,12 @@ public class PaginationResult<T> {
 
     public PaginationResult(){}
 
-    public PaginationResult(PaginationQuery query,List<T> result){
+    public PaginationResult(PaginationQuery query){
         this.query = query;
+    }
+
+    public PaginationResult(PaginationQuery query,List<T> result){
+        this(query);
         this.result = result;
     }
 

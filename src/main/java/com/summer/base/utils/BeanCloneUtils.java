@@ -1,6 +1,7 @@
 package com.summer.base.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.base.pagination.PaginationResult;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class BeanCloneUtils {
      * @param toClass 待转换对象的Class对象
      * @param <From>
      * @param <To>
-     * @return
+     * @return @{link To}
      */
     public static <From,To> To clone(From from,Class<From> fromClass,Class<To> toClass){
         try{
@@ -52,7 +53,7 @@ public class BeanCloneUtils {
      * @param toClass 待转换对象的Class对象
      * @param <From>
      * @param <To>
-     * @return
+     * @return @{link To}
      */
     public static <From,To> List<To> clone(List<From> fromList, Class<From> fromClass, Class<To> toClass){
         try{
@@ -70,13 +71,69 @@ public class BeanCloneUtils {
     }
 
     /**
+     * 克隆 @{link PaginationResult<T>}对象
+     * @param fromPaginationResult
+     * @param fromClass 原对象Class对象
+     * @param toClass 待转换对象的Class对象
+     * @param <From>
+     * @param <To>
+     * @return @{link PaginationResult<To>}
+     */
+    public static <From,To> PaginationResult<To> clone(PaginationResult<From> fromPaginationResult,Class<From> fromClass,Class<To> toClass){
+        try{
+            PaginationResult<To> toPaginationResult = new PaginationResult<To>();
+            toPaginationResult.setQuery(fromPaginationResult.getQuery());
+
+            List<From> fromList = fromPaginationResult.getResult();
+
+            if(CollectionUtils.isNotEmpty(fromList)){
+                toPaginationResult.setResult(BeanCloneUtils.clone(fromList,fromClass,toClass));
+            }
+
+            return toPaginationResult;
+        }catch (Exception e){
+            LOG.error(e.getMessage(),e);
+            e.printStackTrace();
+            throw new RuntimeException("can not clone");
+        }
+    }
+
+    /**
+     * 深度克隆 @{link PaginationResult<T>}对象
+     * @param fromPaginationResult
+     * @param fromClass 原对象Class对象
+     * @param toClass 待转换对象的Class对象
+     * @param <From>
+     * @param <To>
+     * @return   @{link PaginationResult<To>}
+     */
+    public static <From,To> PaginationResult<To> deepClone(PaginationResult<From> fromPaginationResult,Class<From> fromClass,Class<To> toClass){
+        try{
+            PaginationResult<To> toPaginationResult = new PaginationResult<To>();
+            toPaginationResult.setQuery(fromPaginationResult.getQuery());
+
+            List<From> fromList = fromPaginationResult.getResult();
+
+            if(CollectionUtils.isNotEmpty(fromList)){
+                toPaginationResult.setResult(BeanCloneUtils.deepClone(fromList,fromClass,toClass));
+            }
+
+            return toPaginationResult;
+        }catch (Exception e){
+            LOG.error(e.getMessage(),e);
+            e.printStackTrace();
+            throw new RuntimeException("can not clone");
+        }
+    }
+
+    /**
      * 深度克隆
      * @param from 原对象实体
      * @param fromClass 原对象Class对象
      * @param toClass 待转换对象的Class对象
      * @param <From>
      * @param <To>
-     * @return
+     * @return @{link To}
      */
     public static <From,To> To deepClone(From from , Class<From> fromClass, Class<To> toClass){
         try{
@@ -100,7 +157,7 @@ public class BeanCloneUtils {
      * @param toClass 待转换对象的Class对象
      * @param <From>
      * @param <To>
-     * @return
+     * @return @{link To}
      */
     public static <From,To> List<To> deepClone(List<From> fromList, Class<From> fromClass, Class<To> toClass){
         try{

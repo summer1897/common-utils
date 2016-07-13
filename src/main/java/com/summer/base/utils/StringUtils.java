@@ -17,4 +17,22 @@ public class StringUtils {
         char ch = str.charAt(0);
         return Character.toUpperCase(ch) + str.substring(1);
     }
+
+    /**
+     * 判断字符串是否为空
+     * @param str
+     * @return
+     */
+    public static boolean isEmpty(String str){
+        return ObjectUtils.isNotNull(str) && "".equals(str);
+    }
+
+    /**
+     * 判断字符串是否不为空
+     * @param str
+     * @return
+     */
+    public static boolean isNotEmpty(String str){
+        return !isEmpty(str);
+    }
 }
