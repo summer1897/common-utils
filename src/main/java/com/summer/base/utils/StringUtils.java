@@ -33,6 +33,6 @@ public class StringUtils {
      * @return
      */
     public static boolean isNotEmpty(String str){
-        return !isEmpty(str);
+        return ObjectUtils.isNotNull(str) && !"".equals(str);
     }
 }
