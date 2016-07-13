@@ -10,6 +10,10 @@ public class PaginationQuery extends Pagination{
 
     private String sortedPropertyName = null;
 
+    public PaginationQuery(int pageIndex, int pageSize){
+        super(pageIndex,pageSize);
+    }
+
     public PaginationQuery(long totalRecords,int pageIndex, int pageSize){
         super(totalRecords, pageIndex, pageSize);
     }
