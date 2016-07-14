@@ -8,7 +8,7 @@ public class StringUtils {
     /**
      * 将字符串首字母转换为大写
      * @param str
-     * @return
+     * @return @{link String}
      */
     public static String firstAlphaToUpcase(String str){
         if(null == str && str.length() <= 0){
@@ -21,18 +21,18 @@ public class StringUtils {
     /**
      * 判断字符串是否为空
      * @param str
-     * @return
+     * @return boolean
      */
     public static boolean isEmpty(String str){
-        return ObjectUtils.isNotNull(str) && "".equals(str);
+        return ObjectUtils.isNull(str) || "".equals(str);
     }
 
     /**
      * 判断字符串是否不为空
      * @param str
-     * @return
+     * @return boolean
      */
     public static boolean isNotEmpty(String str){
-        return ObjectUtils.isNotNull(str) && !"".equals(str);
+        return !StringUtils.isEmpty(str);
     }
 }
