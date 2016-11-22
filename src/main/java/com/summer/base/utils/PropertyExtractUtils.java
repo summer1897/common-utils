@@ -116,10 +116,11 @@ public class PropertyExtractUtils {
     }
 
     /**
-     *
-     * @param domainList
-     * @param propertyName
-     * @param proClass
+     * 从实体对象集合中提取指定属性的属性值,并以该值作为Map的key,Domain作为value值,
+     * 同时将key值相同的实体对象放在同一个List集合中
+     * @param domainList 实体对象集合
+     * @param propertyName 待导出属性名
+     * @param proClass 待导出属性Class对象
      * @param <Domain>
      * @param <Pro>
      * @return
@@ -134,7 +135,6 @@ public class PropertyExtractUtils {
                     List<Domain> proDomainList = maps.get(pro);
                     if(null == proDomainList){
                         proDomainList = Lists.newArrayList();
-
                     }
                     proDomainList.add(domain);
                     maps.put(pro,proDomainList);
