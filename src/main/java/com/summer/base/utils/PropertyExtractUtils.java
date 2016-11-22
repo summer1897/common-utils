@@ -18,8 +18,6 @@ public class PropertyExtractUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(PropertyExtractUtils.class);
 
-    private static final String PREFIX_GET = "get";
-
     /**
      * 获取实体对象中指定名称的属性值
      * @param domain 实体对象
@@ -32,14 +30,13 @@ public class PropertyExtractUtils {
     public static <Domain,Pro> Pro extractPropertyFromDomain(Domain domain,String propertyName,Class<Pro> propertyClass){
         Pro p = null;
         try{
-            Method method = domain.getClass().getMethod(PREFIX_GET + StringUtils.firstAlphaToUpcase(propertyName));
-            p = (Pro)method.invoke(domain);
-            return p;
+            p = ReflectUtils.getFieldValueFromDomain(domain,propertyName,propertyClass);
         }catch (Exception e){
             LOG.error(e.getMessage(),e);
             e.printStackTrace();
             throw new RuntimeException("can not extract this property: "+propertyName);
         }
+        return p;
     }
 
     /**
@@ -59,12 +56,12 @@ public class PropertyExtractUtils {
             for(Object object : objectList){
                 pros.add(PropertyExtractUtils.extractPropertyFromDomain(object,propertyName,proClass));
             }
-            return pros;
         }catch (Exception e){
             LOG.error(e.getMessage(),e);
             e.printStackTrace();
             throw new RuntimeException("can not extract this property: "+propertyName);
         }
+        return pros;
     }
 
     /**
@@ -77,19 +74,19 @@ public class PropertyExtractUtils {
      * @return
      */
     public static <Domain,Pro> Map<Pro,Domain> extractPropertyFromDomainToMap(Domain domain, String propertyName, Class<Pro> proClass){
+        Map<Pro,Domain> map = null;
         try{
-            Map<Pro,Domain> map = null;
             if(null != domain){
                 map = Maps.newHashMap();
                 Pro p = extractPropertyFromDomain(domain,propertyName,proClass);
                 map.put(p,domain);
             }
-            return map;
         }catch (Exception e){
             LOG.error(e.getMessage(),e);
             e.printStackTrace();
             throw new RuntimeException("can not extract this property: "+propertyName);
         }
+        return map;
     }
 
     /**
@@ -102,19 +99,53 @@ public class PropertyExtractUtils {
      * @return
      */
     public static <Domain,Pro> Map<Pro,Domain> extractPropertyFromDomainToMap(List<Domain> domainList,String propertyName,Class<Pro> proClass){
+        Map<Pro,Domain> maps = null;
         try{
-            Map<Pro,Domain> maps = null;
             if(CollectionUtils.isNotEmpty(domainList)){
                 maps = Maps.newHashMap();
                 for(Domain domain : domainList){
                     maps.putAll(PropertyExtractUtils.extractPropertyFromDomainToMap(domain,propertyName,proClass));
                 }
             }
-            return maps;
         }catch (Exception e){
             LOG.error(e.getMessage(),e);
             e.printStackTrace();
             throw new RuntimeException("can not extract this property: "+propertyName);
         }
+        return maps;
     }
+
+    /**
+     *
+     * @param domainList
+     * @param propertyName
+     * @param proClass
+     * @param <Domain>
+     * @param <Pro>
+     * @return
+     */
+    public static <Domain,Pro> Map<Pro,List<Domain>> extractPropertyFromDomainToMapList(List<Domain> domainList,String propertyName,Class<Pro> proClass){
+        Map<Pro,List<Domain>> maps = null;
+        try{
+            if(CollectionUtils.isNotEmpty(domainList)){
+                maps = Maps.newHashMap();
+                for (Domain domain : domainList){
+                    Pro pro = ReflectUtils.getFieldValueFromDomain(domain,propertyName,proClass);
+                    List<Domain> proDomainList = maps.get(pro);
+                    if(null == proDomainList){
+                        proDomainList = Lists.newArrayList();
+
+                    }
+                    proDomainList.add(domain);
+                    maps.put(pro,proDomainList);
+                }
+            }
+        }catch(Exception e){
+            LOG.error(e.getMessage(),e);
+            e.printStackTrace();
+            throw new RuntimeException("can not extract this property: "+propertyName);
+        }
+        return maps;
+    }
+
 }
