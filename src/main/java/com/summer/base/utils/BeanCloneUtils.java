@@ -136,18 +136,20 @@ public class BeanCloneUtils {
      * @return @{link To}
      */
     public static <From,To> To deepClone(From from , Class<From> fromClass, Class<To> toClass){
+        To to = null;
         try{
             if(null == from){
                 return null;
             }
             String jsonString = JSON.toJSONString(from);
 
-            return JSON.parseObject(jsonString,toClass);
+            to = JSON.parseObject(jsonString,toClass);
         }catch(Exception e){
             LOG.error(e.getMessage(),e);
             e.printStackTrace();
-            throw new RuntimeException("can not clone");
+//            throw new RuntimeException("can not clone");
         }
+        return to;
     }
 
     /**
@@ -160,17 +162,17 @@ public class BeanCloneUtils {
      * @return @{link To}
      */
     public static <From,To> List<To> deepClone(List<From> fromList, Class<From> fromClass, Class<To> toClass){
+        List<To> toList = Lists.newArrayList();
         try{
-            List<To> toList = Lists.newArrayList();
             for (From from : fromList){
                 toList.add(BeanCloneUtils.deepClone(from,fromClass,toClass));
             }
-            return toList;
         }catch (Exception e){
             LOG.error(e.getMessage(),e);
             e.printStackTrace();
-            throw  new RuntimeException("can not clone");
+//            throw  new RuntimeException("can not clone");
         }
+        return toList;
     }
 
     /**
