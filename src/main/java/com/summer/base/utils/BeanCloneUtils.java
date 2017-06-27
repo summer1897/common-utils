@@ -59,6 +59,10 @@ public class BeanCloneUtils {
         try{
             List<To> toLists = Lists.newArrayList();
 
+            if (!ObjectUtils.isEmptyList(fromList)) {
+                return toLists;
+            }
+
             for(From from : fromList){
                 toLists.add(BeanCloneUtils.clone(from,fromClass,toClass));
             }
