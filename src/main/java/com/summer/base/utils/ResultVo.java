@@ -15,6 +15,11 @@ public class ResultVo implements Serializable{
 
     private static final long serialVersionUID = -6583684461564442731L;
 
+    /**成功*/
+    public static final int RESULT_CODE_SUCCESS = 1;
+    /**错误*/
+    public static final int RESULT_CODE_ERROR = 0;
+
     /**返回状态码，1：success，0：error*/
     private int code;
     /**错误消息*/
