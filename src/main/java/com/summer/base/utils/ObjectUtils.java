@@ -1,5 +1,6 @@
 package com.summer.base.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -57,6 +58,9 @@ public class ObjectUtils {
     }
 
     private static SimpleDateFormat getFormat(String format) {
+        if (StringUtils.isEmpty(format)) {
+            format = DEFAULT_DATE_TIME_FORMAT;
+        }
         return new SimpleDateFormat(format);
     }
 
@@ -96,5 +100,35 @@ public class ObjectUtils {
             format = DEFAULT_DATE_TIME_FORMAT;
         }
         return ObjectUtils.getFormat(format).format(new Date());
+    }
+
+    /**
+     * 格式化日期
+     * @param date
+     * @param format 日期格式，如：yyyy-MM-dd hh:mm:ss
+     * @return 返回格式化后的日期,如2017-06-29 20:20:23
+     */
+    public static String formatDate(Date date,String format) {
+        if (ObjectUtils.isNull(date)) {
+            date = new Date();
+        }
+        return ObjectUtils.getFormat(format).format(date);
+    }
+
+    /**
+     * 解析时间字符串
+     * @param dateStr 时间字符串
+     * @return {@see java.util.Date}
+     */
+    public static Date pareseDate(String dateStr) {
+        Date date = null;
+        if (StringUtils.isNotEmpty(dateStr)) {
+            try {
+                date = ObjectUtils.getFormat(DEFAULT_DATE_TIME_FORMAT).parse(dateStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return date;
     }
 }
