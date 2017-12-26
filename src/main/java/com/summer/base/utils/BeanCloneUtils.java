@@ -59,7 +59,7 @@ public class BeanCloneUtils {
         try{
             List<To> toLists = Lists.newArrayList();
 
-            if (!ObjectUtils.isEmptyList(fromList)) {
+            if (ObjectUtils.isEmpty(fromList)) {
                 return toLists;
             }
 
