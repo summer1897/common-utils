@@ -117,4 +117,15 @@ public class ObjectUtils {
         return !ObjectUtils.isNotEmpty(map);
     }
 
+    public static boolean isEmpty(Object[] objs) {
+        if (ObjectUtils.isNull(objs) || objs.length <= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isNotEmpty(Object[] objs) {
+        return !ObjectUtils.isEmpty(objs);
+    }
+
 }
