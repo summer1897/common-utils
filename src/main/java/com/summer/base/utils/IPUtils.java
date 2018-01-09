@@ -32,6 +32,10 @@ public class IPUtils {
             ip = request.getRemoteAddr();
         }
 
+        if ("0:0:0:0:0:0:0:1".equals(ip)) {
+            ip = "127.0.0.1";
+        }
+
         //多个代理ip的情况
         int index = ip.indexOf(",");
         if (index > 0) {
@@ -41,7 +45,6 @@ public class IPUtils {
     }
 
     private static boolean validate(String ip) {
-        ip = ip.trim();
         if (ObjectUtils.isNull(ip) || StringUtils.isEmpty(ip) || UNKNOWN.equals(ip)) {
             return false;
         }
