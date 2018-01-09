@@ -1,31 +1,16 @@
 package com.summer.base.utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA
- * Author summer
+ * Author duhao
  * Date 2016/7/12
  * Time 20:47
  */
 public class ObjectUtils {
-
-    /**
-     * 默认时间格式
-     */
-    public static final String DEFAULT_TIME_FORMAT = "hh:mm:ss";
-    /**
-     * 默认日期格式
-     */
-    public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
-    /**
-     * 默认日期（含时间）格式
-     */
-    public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
     public static boolean isNull(Object obj) {
         return null == obj;
@@ -36,11 +21,63 @@ public class ObjectUtils {
     }
 
     /**
+     * 判断集合对象是否全部不为Null
+     * @param collection
+     * @return Booelan,集合中对象只要有一个为Null，返回false
+     */
+    public static boolean isAllListElementNotNull(Collection<? extends Object> collection) {
+        if (ObjectUtils.isEmpty(collection)) {
+            return false;
+        }
+
+        for (Object o : collection) {
+            if (ObjectUtils.isNull(o)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 判读集合中是否存在一个非Null元素
+     * @param collection
+     * @return Boolean,集合中对象只要有一个为非Null，则返回true
+     */
+    public static boolean isAnyListElementNotNull(Collection<? extends Object> collection) {
+        for (Object o : collection) {
+            if (ObjectUtils.isNotNull(o)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断Map集合的Values集合是否存在Null值
+     * @param map
+     * @return booleam,只要Map集合中的values集合中的对象有一个为Null,返回false
+     */
+    public static boolean isAllMapValuesNotNull(Map<? extends Object,? extends Object> map) {
+        if (ObjectUtils.isEmpty(map)) {
+            return false;
+        }
+        return ObjectUtils.isAllListElementNotNull(map.values());
+    }
+
+    public static boolean isAnyMapValuesNotNull(Map<? extends Object,? extends Object> map) {
+        if (ObjectUtils.isEmpty(map)) {
+            return false;
+        }
+        return ObjectUtils.isAnyListElementNotNull(map.values());
+    }
+
+    /**
      * 判断集合是否为空
      *
      * @param collection
      * @return true为空，false不为空
      */
+    @Deprecated
     public static boolean isEmptyList(Collection<?> collection) {
         if (null == collection || collection.size() <= 0)
             return true;
@@ -53,82 +90,42 @@ public class ObjectUtils {
      * @param collection
      * @return false为空，true不为空
      */
+    @Deprecated
     public static boolean isNotEmptyList(Collection<?> collection) {
         return !ObjectUtils.isEmptyList(collection);
     }
 
-    private static SimpleDateFormat getFormat(String format) {
-        if (StringUtils.isEmpty(format)) {
-            format = DEFAULT_DATE_TIME_FORMAT;
+    public static boolean isNotEmpty(Collection<?> collection) {
+        if (null == collection || collection.isEmpty()) {
+            return false;
         }
-        return new SimpleDateFormat(format);
+        return true;
     }
 
-    /**
-     * 获取当前时间（不包含日期)
-     *
-     * @param format 时间显示格式
-     * @return 时间字符串，如13:34:38
-     */
-    public static String getCurrenTime(String format) {
-        if (StringUtils.isEmpty(format)) {
-            format = DEFAULT_TIME_FORMAT;
-        }
-
-        return ObjectUtils.getFormat(format).format(new Date());
+    public static boolean isEmpty(Collection<?> collection) {
+        return !ObjectUtils.isNotEmpty(collection);
     }
 
-    /**
-     * 获取当前日期（不包含时间)
-     * @param format 日期显示格式
-     * @return 日期字符串，如2017-06-25
-     */
-    public static String getCurrenDate(String format) {
-        if (StringUtils.isEmpty(format)) {
-            format = DEFAULT_DATE_FORMAT;
+    public static boolean isNotEmpty(Map<?,?> map) {
+        if (null == map || map.isEmpty()) {
+            return false;
         }
-        return ObjectUtils.getFormat(format).format(new Date());
+        return true;
     }
 
-    /**
-     * 获取当前日期（含时间)
-     * @param format 日期显示格式
-     * @return 日期字符串，如2017-06-25 13:34:38
-     */
-    public static String getCurrenDateAndTime(String format) {
-        if (StringUtils.isEmpty(format)) {
-            format = DEFAULT_DATE_TIME_FORMAT;
-        }
-        return ObjectUtils.getFormat(format).format(new Date());
+    public static boolean isEmpty(Map<?,?> map) {
+        return !ObjectUtils.isNotEmpty(map);
     }
 
-    /**
-     * 格式化日期
-     * @param date
-     * @param format 日期格式，如：yyyy-MM-dd hh:mm:ss
-     * @return 返回格式化后的日期,如2017-06-29 20:20:23
-     */
-    public static String formatDate(Date date,String format) {
-        if (ObjectUtils.isNull(date)) {
-            date = new Date();
+    public static boolean isEmpty(Object[] objs) {
+        if (ObjectUtils.isNull(objs) || objs.length <= 0) {
+            return true;
         }
-        return ObjectUtils.getFormat(format).format(date);
+        return false;
     }
 
-    /**
-     * 解析时间字符串
-     * @param dateStr 时间字符串
-     * @return {@see java.util.Date}
-     */
-    public static Date pareseDate(String dateStr) {
-        Date date = null;
-        if (StringUtils.isNotEmpty(dateStr)) {
-            try {
-                date = ObjectUtils.getFormat(DEFAULT_DATE_TIME_FORMAT).parse(dateStr);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        return date;
+    public static boolean isNotEmpty(Object[] objs) {
+        return !ObjectUtils.isEmpty(objs);
     }
+
 }

@@ -13,7 +13,9 @@ import java.util.Map;
 /**
  * Created by summer on 2016/7/9.
  * 对象实体属性导出工具类
+ * 该类已过时，可用{@link PropertyUtils}
  */
+@Deprecated
 public class PropertyExtractUtils {
 
     private static final Logger LOG = LoggerFactory.getLogger(PropertyExtractUtils.class);
