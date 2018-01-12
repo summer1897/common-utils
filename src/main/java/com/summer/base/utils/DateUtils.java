@@ -16,6 +16,12 @@ import java.util.Date;
  * @Description 日期操作工具类
  */
 public class DateUtils {
+
+    /**
+     * 默认日期时间字符串
+     */
+    public static final String DEFAULT_DATE_TIME_STR = "yyyyMMddHHmmss";
+
     /**
      * 默认时间格式
      */
