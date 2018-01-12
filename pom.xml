@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.release.version>3.0.0</project.release.version>
+        <project.release.version>4.0.0</project.release.version>
         <org.springframework-version>4.2.6.RELEASE</org.springframework-version>
         <slf4j.version>1.6.1</slf4j.version>
         <jetty.port>18072</jetty.port>
@@ -75,6 +75,11 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.20</version>
         </dependency>
     </dependencies>
     <distributionManagement>

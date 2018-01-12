@@ -20,15 +20,52 @@ public class ObjectUtils {
         return !isNull(obj);
     }
 
+    public static boolean isAllNull(Object...objs) {
+        for (Object obj : objs) {
+            if (ObjectUtils.isNotNull(obj)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean isAnyNull(Object...objs) {
+        for (Object obj : objs) {
+            if (ObjectUtils.isNull(obj)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isAllNotNull(Object...objs) {
+        for (Object obj : objs) {
+            if (ObjectUtils.isNull(obj)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isAnyNotNull(Object...objs) {
+        for (Object obj : objs) {
+            if (ObjectUtils.isNotNull(obj)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 判断集合对象是否全部不为Null
      * @param collection
      * @return Booelan,集合中对象只要有一个为Null，返回false
      */
     public static boolean isAllListElementNotNull(Collection<? extends Object> collection) {
-        if (ObjectUtils.isEmpty(collection)) {
-            return false;
-        }
+//        if (ObjectUtils.isEmpty(collection)) {
+//            return false;
+//        }
 
         for (Object o : collection) {
             if (ObjectUtils.isNull(o)) {
@@ -126,6 +163,12 @@ public class ObjectUtils {
 
     public static boolean isNotEmpty(Object[] objs) {
         return !ObjectUtils.isEmpty(objs);
+    }
+
+    public static void main(String[] args) {
+        Object[] objs = new Object[]{"hello","","haha"};
+        boolean allNull = isAllNotNull(objs);
+        System.out.println(allNull);
     }
 
 }

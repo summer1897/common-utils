@@ -18,7 +18,6 @@ import java.util.Properties;
  * @Description Property解析工具类 ，用于读取properties属性文件
  * 该类已过时，可用{@link PropertyUtils}
  */
-@Deprecated
 public class PropertyReaderUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(PropertyReaderUtils.class);
