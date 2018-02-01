@@ -17,6 +17,9 @@
         <slf4j.version>1.6.1</slf4j.version>
         <jetty.port>18072</jetty.port>
         <jetty.interval>0</jetty.interval>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -95,11 +98,27 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <build>
+        <finalName>common-utils</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <profiles>
         <profile>
             <id>product</id>
             <properties>
-                <project.release.version>1.0.0-RELEASES</project.release.version>
+                <project.release.version>4.0.0-RELEASES</project.release.version>
             </properties>
         </profile>
     </profiles>

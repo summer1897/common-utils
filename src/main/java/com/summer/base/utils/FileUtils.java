@@ -203,12 +203,4 @@ public class FileUtils {
         }
     }
 
-    public static void main(String[] args) {
-//       mkFile("hello.txt","F:","upload","sayHello");
-//        delete("F:","upload","sayHello","hello.txt");
-        Path path = Paths.get("F", "upload");
-        Path fileName = path.getFileName();
-        System.out.println(fileName.getName(0));
-    }
-
 }
