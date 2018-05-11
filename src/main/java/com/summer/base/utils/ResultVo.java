@@ -1,42 +1,120 @@
 package com.summer.base.utils;
 
+import com.base.enums.HttpStatus;
+
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Intellij IDEA
  *
- * @Author summer
- * @Date 2017/6/27 下午5:06
+ * @Author solstice
+ * @Date 2018/05/11 10:04
  * @Description Controller层返回结果封装类
  */
-public class ResultVo implements Serializable{
+public class ResultVo implements Serializable {
 
-    private static final long serialVersionUID = -6583684461564442731L;
+    private static final long serialVersionUID = 8187824885983927700L;
 
-    /**成功*/
-    public static final int RESULT_CODE_SUCCESS = 1;
-    /**错误*/
-    public static final int RESULT_CODE_ERROR = 0;
+    /**操作成功提示信息*/
+    public static final String SUCCESS_MSG = "操作成功";
+    /**操作失败提示信息*/
+    public static final String FAIL_MSG = "操作失败";
+    /**操作失败状态码*/
+    public static final int FAIL_STATUS_CODE = -1;
+    /**操作成功状态码*/
+    public static final int SUCCESS_STATUS_CODE = 1;
 
-    /**返回状态码，1：success，0：error*/
+
+    /**相应码*/
     private int code;
-    /**错误消息*/
-    private String message;
-    /**存放返回给前端的数据集*/
-    private Map<String,Object> result = new HashMap<String,Object>();
+    /**相应消息*/
+    private String msg;
+    /**相应数据*/
+    private Object data;
 
-    public ResultVo(){}
-
-    public ResultVo(int code,String message){
-        this.code = code;
-        this.message = message;
+    public static ResultVo success() {
+        return new ResultVo(SUCCESS_STATUS_CODE,SUCCESS_MSG);
     }
 
-    public ResultVo(int code,String message,Map<String,Object> result) {
-        this(code,message);
-        this.result = result;
+    public static ResultVo success(Object data) {
+        return new ResultVo(SUCCESS_STATUS_CODE,SUCCESS_MSG,data);
+    }
+
+    public static ResultVo success(String msg) {
+        return new ResultVo(SUCCESS_STATUS_CODE,msg);
+    }
+
+    public static ResultVo success(int code) {
+        return new ResultVo(code,SUCCESS_MSG);
+    }
+
+    public static ResultVo success(String msg,Object data) {
+        return new ResultVo(SUCCESS_STATUS_CODE,msg,data);
+    }
+
+    public static ResultVo success(int code,Object data) {
+        return new ResultVo(code,SUCCESS_MSG,data);
+    }
+
+    public static ResultVo success(int code,String msg) {
+        return new ResultVo(code,msg);
+    }
+
+    public static ResultVo success(int code,String msg,Object data) {
+        return new ResultVo(code,msg,data);
+    }
+
+    public static ResultVo success(HttpStatus httpStatus) {
+        if (ObjectUtils.isNotNull(httpStatus)) {
+            return ResultVo.success(httpStatus.getCode(),httpStatus.getMsg());
+        } else {
+            return ResultVo.success();
+        }
+    }
+
+    public static ResultVo success(HttpStatus httpStatus,Object data) {
+        if (ObjectUtils.isNotNull(httpStatus)) {
+            return ResultVo.success(httpStatus.getCode(),httpStatus.getMsg(),data);
+        } else {
+            return ResultVo.success(data);
+        }
+    }
+
+    public static ResultVo fail() {
+        return new ResultVo(FAIL_STATUS_CODE,FAIL_MSG);
+    }
+
+    public static ResultVo fail(String msg) {
+        return new ResultVo(FAIL_STATUS_CODE,msg);
+    }
+
+    public static ResultVo fail(int code) {
+        return new ResultVo(code,FAIL_MSG);
+    }
+
+    public static ResultVo fail(int code,String msg) {
+        return new ResultVo(code,msg);
+    }
+
+    public static ResultVo fail(HttpStatus httpStatus) {
+        if (ObjectUtils.isNotNull(httpStatus)) {
+            return ResultVo.fail(httpStatus.getCode(),httpStatus.getMsg());
+        } else {
+            return ResultVo.fail();
+        }
+    }
+
+    public ResultVo() {
+    }
+
+    public ResultVo(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public ResultVo(int code, String msg, Object data) {
+        this(code,msg);
+        this.data = data;
     }
 
     public int getCode() {
@@ -47,28 +125,23 @@ public class ResultVo implements Serializable{
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public Map<String, Object> getResult() {
-        return result;
+    public Object getData() {
+        return data;
     }
 
-    public void setResult(Map<String, Object> result) {
-        this.result = result;
+    public void setData(Object data) {
+        this.data = data;
     }
 
-    /**
-     * 添加数据
-     * @param key
-     * @param value
-     */
-    public void addData(String key,Object value) {
-        result.put(key,value);
+    public static boolean retVal(Integer result) {
+        return ObjectUtils.isNotNull(result) && result.intValue() > 0;
     }
 }

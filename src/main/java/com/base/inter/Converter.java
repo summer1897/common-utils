@@ -4,7 +4,7 @@ package com.base.inter;
  * Created by Intellij IDEA
  *
  * @Projcet common-utils
- * @Author yangyang
+ * @Author solstice
  * @Date 2018/2/1
  * @Time 17:04
  * @Description 数据转换接口，用于
