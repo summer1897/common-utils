@@ -46,6 +46,9 @@ public class StringUtils {
     }
 
     public static boolean isAnyEmpty(String...strs) {
+    	if (strs.length <= 0) {
+    		return true;
+    	}
         for (String str : strs) {
             if (StringUtils.isEmpty(str)) {
                 return true;
@@ -55,21 +58,11 @@ public class StringUtils {
     }
 
     public static boolean isAllNotEmpty(String...strs) {
-        for (String str : strs) {
-            if (StringUtils.isEmpty(str)) {
-                return false;
-            }
-        }
-        return true;
+        return !StringUtils.isAnyEmpty(strs);
     }
 
     public static boolean isAnyNotEmpty(String...strs) {
-        for (String str : strs) {
-            if (StringUtils.isNotEmpty(str)) {
-                return true;
-            }
-        }
-        return false;
+        return !StringUtils.isAllEmpty(strs);
     }
 
     /**
