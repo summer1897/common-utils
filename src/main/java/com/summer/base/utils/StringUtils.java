@@ -46,7 +46,7 @@ public class StringUtils {
     }
 
     public static boolean isAnyEmpty(String...strs) {
-    	if (strs.length <= 0) {
+    	if (ObjectUtils.isNull(strs) && strs.length <= 0) {
     		return true;
     	}
         for (String str : strs) {
