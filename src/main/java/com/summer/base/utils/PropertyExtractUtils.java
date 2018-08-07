@@ -73,7 +73,7 @@ public class PropertyExtractUtils {
      * @param proClass 待导出属性Class对象
      * @param <Domain>
      * @param <Pro>
-     * @return
+     * @return {@link Map<Pro,Domain>}
      */
     public static <Domain,Pro> Map<Pro,Domain> extractPropertyFromDomainToMap(Domain domain, String propertyName, Class<Pro> proClass){
         Map<Pro,Domain> map = null;
@@ -98,7 +98,7 @@ public class PropertyExtractUtils {
      * @param proClass 待导出属性Class对象
      * @param <Domain>
      * @param <Pro>
-     * @return
+     * @return {@link Map<Pro,Domain>}
      */
     public static <Domain,Pro> Map<Pro,Domain> extractPropertyFromDomainToMap(List<Domain> domainList,String propertyName,Class<Pro> proClass){
         Map<Pro,Domain> maps = null;
@@ -125,7 +125,7 @@ public class PropertyExtractUtils {
      * @param proClass 待导出属性Class对象
      * @param <Domain>
      * @param <Pro>
-     * @return
+     * @return {@link Map<Pro,List<Domain>>}
      */
     public static <Domain,Pro> Map<Pro,List<Domain>> extractPropertyFromDomainToMapList(List<Domain> domainList,String propertyName,Class<Pro> proClass){
         Map<Pro,List<Domain>> maps = null;
@@ -134,12 +134,7 @@ public class PropertyExtractUtils {
                 maps = Maps.newHashMap();
                 for (Domain domain : domainList){
                     Pro pro = ReflectUtils.getFieldValueFromDomain(domain,propertyName,proClass);
-                    List<Domain> proDomainList = maps.get(pro);
-                    if(null == proDomainList){
-                        proDomainList = Lists.newArrayList();
-                    }
-                    proDomainList.add(domain);
-                    maps.put(pro,proDomainList);
+                    setPro(maps,domain,pro);
                 }
             }
         }catch(Exception e){
@@ -148,6 +143,15 @@ public class PropertyExtractUtils {
             throw new RuntimeException("can not extract this property: "+propertyName);
         }
         return maps;
+    }
+
+    protected static <Pro,Domain> void setPro(Map<Pro,List<Domain>> maps,Domain domain,Pro pro) {
+        List<Domain> proDomainList = maps.get(pro);
+        if(null == proDomainList){
+            proDomainList = Lists.newArrayList();
+        }
+        proDomainList.add(domain);
+        maps.put(pro,proDomainList);
     }
 
 }
